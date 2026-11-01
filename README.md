@@ -168,7 +168,7 @@ People will point real SSH clients, and real scanners, at these servers.
 
 ## Parity
 
-All of wish v2.0.5's Go packages are ported, and its tests are ported to `bun test` in `tests/`: they start real servers and connect with `ssh2`'s client, or with OpenSSH and Git where upstream does. **152 tests pass on Bun 1.4 and on Node.js 26** (`npm run test:node` runs the same files under Node's test runner against the built `dist/`). The 32 tests in `tests/server.test.ts` and `tests/bubbletea.test.ts` are new: limits and timeouts, signature checks, authentication edge cases, session isolation, and the Bubble Tea middleware, which has no tests upstream.
+All of wish v2.0.5's Go packages are ported, and its tests are ported to `bun test` in `tests/`: they start real servers and connect with `ssh2`'s client, or with OpenSSH and Git where upstream does. **153 tests pass on Bun 1.4 and on Node.js 26** (`npm run test:node` runs the same files under Node's test runner against the built `dist/`). The 32 tests in `tests/server.test.ts` and `tests/bubbletea.test.ts` are new: limits and timeouts, signature checks, authentication edge cases, session isolation, and the Bubble Tea middleware, which has no tests upstream.
 
 What is missing or different:
 

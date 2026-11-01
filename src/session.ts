@@ -6,7 +6,7 @@
  * child processes, or handed to a Bubble Tea Program as input and output.
  */
 
-import { Duplex, Writable } from 'node:stream';
+import { Duplex, type Readable, Writable } from 'node:stream';
 import type { Context, Permissions, Pty, Signal, Window } from './context.js';
 import type { PublicKey } from './keys.js';
 
@@ -221,6 +221,17 @@ export class Session extends Duplex {
     this._channel.end();
   }
 
+  /**
+   * Iterates over the client's input. Unlike a plain Readable, ending the
+   * loop (or breaking out of it) does not destroy the session: handlers
+   * usually read the input and then write a reply.
+   */
+  override [Symbol.asyncIterator](): ReturnType<Duplex[typeof Symbol.asyncIterator]> {
+    const it = readChunks(this) as AsyncGenerator<Buffer> & Record<symbol, unknown>;
+    if (typeof Symbol.asyncDispose === 'symbol') it[Symbol.asyncDispose] = async () => void (await it.return(undefined));
+    return it as unknown as ReturnType<Duplex[typeof Symbol.asyncIterator]>;
+  }
+
   // ── Session API ──────────────────────────────────────────────────────────
 
   /** The user name the client logged in as. */
@@ -393,4 +404,26 @@ export function shellSplit(input: string): string[] {
   if (quote) return [];
   if (inWord) words.push(word);
   return words;
+}
+
+async function* readChunks(s: Readable): AsyncGenerator<Buffer> {
+  for (;;) {
+    const chunk = s.read() as Buffer | null;
+    if (chunk !== null) {
+      yield chunk;
+      continue;
+    }
+    if (s.readableEnded || s.destroyed) return;
+    await new Promise<void>((resolve) => {
+      const done = () => {
+        s.off('readable', done);
+        s.off('end', done);
+        s.off('close', done);
+        resolve();
+      };
+      s.once('readable', done);
+      s.once('end', done);
+      s.once('close', done);
+    });
+  }
 }

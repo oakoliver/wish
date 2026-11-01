@@ -152,3 +152,18 @@ test('a non-zero exit is an error', async () => {
   await sess.run('');
   expect(message).toBe('exit status 3');
 });
+
+// Reading the input with `for await` must leave the session open for the reply.
+test('for await over the session, then reply', async () => {
+  const sess = await testsession.New(
+    new Server({
+      handler: async (s) => {
+        let lines = 0;
+        for await (const chunk of s) lines += String(chunk).split('\n').length - 1;
+        s.write(`lines=${lines}\n`);
+      },
+    }),
+  );
+  sess.stdin = 'a\nb\nc\n';
+  expect((await sess.output('count')).toString()).toBe('lines=3\n');
+});
