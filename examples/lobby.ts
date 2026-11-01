@@ -67,7 +67,7 @@ const authorizedKeys = flag('--authorized-keys');
 // ── palette (Catppuccin Mocha) ─────────────────────────────────────────────
 const C = {
   text: '#cdd6f4', sub: '#a6adc8', dim: '#6c7086', faint: '#45475a', base: '#1e1e2e', mantle: '#181825',
-  surface: '#313244', mauve: '#cba6f7', green: '#a6e3a1', yellow: '#f9e2af', red: '#f38ba8', peach: '#fab387',
+  mauve: '#cba6f7', green: '#a6e3a1', yellow: '#f9e2af', red: '#f38ba8', peach: '#fab387',
 };
 const NAME_COLORS = ['#f5c2e7', '#cba6f7', '#f38ba8', '#fab387', '#f9e2af', '#a6e3a1', '#94e2d5', '#89dceb', '#74c7ec', '#89b4fa', '#b4befe', '#f2cdcd'];
 const st = () => newStyle();
@@ -297,13 +297,11 @@ class Lobby implements Model {
       const lead = e.action ? `${fg(C.dim, '* ')}${who} ` : `${who} `;
       const indent = 6 + stringWidth(lead);
       const body = wrap(e.text, Math.max(10, width - indent)).split('\n');
+      // Messages that mention you get a yellow time stamp and text.
       const mentioned = e.from !== this.me && mention.test(e.text);
-      const color = e.action ? C.sub : C.text;
-      body.forEach((line, i) => {
-        let row = (i === 0 ? time + lead : ' '.repeat(indent)) + fg(color, line);
-        if (mentioned) row = st().background(C.surface).render(row + ' '.repeat(Math.max(0, width - stringWidth(row))));
-        lines.push(row);
-      });
+      const color = mentioned ? C.yellow : e.action ? C.sub : C.text;
+      const stamp = mentioned ? fg(C.yellow, hhmm(e.at) + ' ', true) : time;
+      body.forEach((line, i) => lines.push((i === 0 ? stamp + lead : ' '.repeat(indent)) + fg(color, line)));
     }
     this.vp.setContent(lines.join('\n'));
     if (this.follow) this.vp.gotoBottom();

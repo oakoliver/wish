@@ -166,7 +166,7 @@ class Arena implements Model {
       const medal = [C.yellow, C.sub, C.peach][i] ?? C.dim;
       rows.push(fg(medal, `${String(i + 1).padStart(2)}. `, true) + tag(s, C.text) + fg(C.teal, ' ' + grouped(s.score)));
     });
-    rows.push('', fg(C.faint, 'user autoplay: watch the AI'));
+    rows.push('', fg(C.faint, 'autoplay@ watches the AI'));
     return newStyle()
       .width(PANEL - 4)
       .padding(0, 1)
