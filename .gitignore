@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.tgz
+.DS_Store
+.ssh/
+.repos/
+.mine-tmp.ts
+.stress.log
+examples/scp/testdata/*
+!examples/scp/testdata/.gitkeep

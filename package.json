@@ -1,0 +1,85 @@
+{
+  "name": "@oakoliver/wish",
+  "version": "1.0.0",
+  "description": "Build SSH apps in TypeScript: an SSH server with middleware for Bubble Tea, Git, SCP, logging, access control and rate limiting. A port of Charm's wish",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "require": "./dist/cjs/index.js" },
+    "./bubbletea": { "types": "./dist/bubbletea.d.ts", "import": "./dist/bubbletea.js", "require": "./dist/cjs/bubbletea.js" },
+    "./accesscontrol": { "types": "./dist/accesscontrol.d.ts", "import": "./dist/accesscontrol.js", "require": "./dist/cjs/accesscontrol.js" },
+    "./activeterm": { "types": "./dist/activeterm.d.ts", "import": "./dist/activeterm.js", "require": "./dist/cjs/activeterm.js" },
+    "./comment": { "types": "./dist/comment.d.ts", "import": "./dist/comment.js", "require": "./dist/cjs/comment.js" },
+    "./elapsed": { "types": "./dist/elapsed.d.ts", "import": "./dist/elapsed.js", "require": "./dist/cjs/elapsed.js" },
+    "./git": { "types": "./dist/git.d.ts", "import": "./dist/git.js", "require": "./dist/cjs/git.js" },
+    "./logging": { "types": "./dist/logging.d.ts", "import": "./dist/logging.js", "require": "./dist/cjs/logging.js" },
+    "./ratelimiter": { "types": "./dist/ratelimiter.d.ts", "import": "./dist/ratelimiter.js", "require": "./dist/cjs/ratelimiter.js" },
+    "./recover": { "types": "./dist/recover.d.ts", "import": "./dist/recover.js", "require": "./dist/cjs/recover.js" },
+    "./scp": { "types": "./dist/scp.d.ts", "import": "./dist/scp.js", "require": "./dist/cjs/scp.js" },
+    "./testsession": { "types": "./dist/testsession.d.ts", "import": "./dist/testsession.js", "require": "./dist/cjs/testsession.js" }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build:esm": "esbuild src/*.ts --format=esm --platform=node --outdir=dist --target=es2022",
+    "build:cjs": "esbuild src/*.ts --format=cjs --platform=node --outdir=dist/cjs --target=es2022 && node -e \"require('fs').writeFileSync('dist/cjs/package.json', JSON.stringify({ type: 'commonjs' }) + '\\n')\"",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build": "rm -rf dist && npm run build:esm && npm run build:cjs && npm run build:types",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p examples",
+    "test": "bun test",
+    "test:node": "npm run build && node --import ./tests/node/register.mjs --test --test-concurrency=1 tests/*.test.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ssh",
+    "ssh-server",
+    "ssh-apps",
+    "tui",
+    "terminal",
+    "bubbletea",
+    "wish",
+    "charmbracelet",
+    "git",
+    "scp",
+    "middleware",
+    "typescript"
+  ],
+  "author": "Antonio Oliveira <antonio@oakoliver.com> (https://oakoliver.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oakoliver/wish"
+  },
+  "homepage": "https://github.com/oakoliver/wish#readme",
+  "bugs": {
+    "url": "https://github.com/oakoliver/wish/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "ssh2": "^1.17.0"
+  },
+  "peerDependencies": {
+    "@oakoliver/bubbletea": "^1.2.1",
+    "@oakoliver/lipgloss": "^1.1.3"
+  },
+  "peerDependenciesMeta": {
+    "@oakoliver/bubbletea": { "optional": true },
+    "@oakoliver/lipgloss": { "optional": true }
+  },
+  "devDependencies": {
+    "@oakoliver/bubbles": "^1.2.2",
+    "@oakoliver/bubbletea": "^1.2.1",
+    "@oakoliver/lipgloss": "^1.1.3",
+    "@types/node": "^20",
+    "@types/ssh2": "^1.15.6",
+    "esbuild": "^0.28.2",
+    "typescript": "^5"
+  }
+}
