@@ -7,18 +7,66 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "require": "./dist/cjs/index.js" },
-    "./bubbletea": { "types": "./dist/bubbletea.d.ts", "import": "./dist/bubbletea.js", "require": "./dist/cjs/bubbletea.js" },
-    "./accesscontrol": { "types": "./dist/accesscontrol.d.ts", "import": "./dist/accesscontrol.js", "require": "./dist/cjs/accesscontrol.js" },
-    "./activeterm": { "types": "./dist/activeterm.d.ts", "import": "./dist/activeterm.js", "require": "./dist/cjs/activeterm.js" },
-    "./comment": { "types": "./dist/comment.d.ts", "import": "./dist/comment.js", "require": "./dist/cjs/comment.js" },
-    "./elapsed": { "types": "./dist/elapsed.d.ts", "import": "./dist/elapsed.js", "require": "./dist/cjs/elapsed.js" },
-    "./git": { "types": "./dist/git.d.ts", "import": "./dist/git.js", "require": "./dist/cjs/git.js" },
-    "./logging": { "types": "./dist/logging.d.ts", "import": "./dist/logging.js", "require": "./dist/cjs/logging.js" },
-    "./ratelimiter": { "types": "./dist/ratelimiter.d.ts", "import": "./dist/ratelimiter.js", "require": "./dist/cjs/ratelimiter.js" },
-    "./recover": { "types": "./dist/recover.d.ts", "import": "./dist/recover.js", "require": "./dist/cjs/recover.js" },
-    "./scp": { "types": "./dist/scp.d.ts", "import": "./dist/scp.js", "require": "./dist/cjs/scp.js" },
-    "./testsession": { "types": "./dist/testsession.d.ts", "import": "./dist/testsession.js", "require": "./dist/cjs/testsession.js" }
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./bubbletea": {
+      "types": "./dist/bubbletea.d.ts",
+      "import": "./dist/bubbletea.js",
+      "require": "./dist/cjs/bubbletea.js"
+    },
+    "./accesscontrol": {
+      "types": "./dist/accesscontrol.d.ts",
+      "import": "./dist/accesscontrol.js",
+      "require": "./dist/cjs/accesscontrol.js"
+    },
+    "./activeterm": {
+      "types": "./dist/activeterm.d.ts",
+      "import": "./dist/activeterm.js",
+      "require": "./dist/cjs/activeterm.js"
+    },
+    "./comment": {
+      "types": "./dist/comment.d.ts",
+      "import": "./dist/comment.js",
+      "require": "./dist/cjs/comment.js"
+    },
+    "./elapsed": {
+      "types": "./dist/elapsed.d.ts",
+      "import": "./dist/elapsed.js",
+      "require": "./dist/cjs/elapsed.js"
+    },
+    "./git": {
+      "types": "./dist/git.d.ts",
+      "import": "./dist/git.js",
+      "require": "./dist/cjs/git.js"
+    },
+    "./logging": {
+      "types": "./dist/logging.d.ts",
+      "import": "./dist/logging.js",
+      "require": "./dist/cjs/logging.js"
+    },
+    "./ratelimiter": {
+      "types": "./dist/ratelimiter.d.ts",
+      "import": "./dist/ratelimiter.js",
+      "require": "./dist/cjs/ratelimiter.js"
+    },
+    "./recover": {
+      "types": "./dist/recover.d.ts",
+      "import": "./dist/recover.js",
+      "require": "./dist/cjs/recover.js"
+    },
+    "./scp": {
+      "types": "./dist/scp.d.ts",
+      "import": "./dist/scp.js",
+      "require": "./dist/cjs/scp.js"
+    },
+    "./testsession": {
+      "types": "./dist/testsession.d.ts",
+      "import": "./dist/testsession.js",
+      "require": "./dist/cjs/testsession.js"
+    }
   },
   "files": [
     "dist",
@@ -53,7 +101,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/oakoliver/wish"
+    "url": "git+https://github.com/oakoliver/wish.git"
   },
   "homepage": "https://github.com/oakoliver/wish#readme",
   "bugs": {
@@ -70,8 +118,12 @@
     "@oakoliver/lipgloss": "^1.1.3"
   },
   "peerDependenciesMeta": {
-    "@oakoliver/bubbletea": { "optional": true },
-    "@oakoliver/lipgloss": { "optional": true }
+    "@oakoliver/bubbletea": {
+      "optional": true
+    },
+    "@oakoliver/lipgloss": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@oakoliver/bubbles": "^1.2.2",
