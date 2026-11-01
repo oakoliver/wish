@@ -192,6 +192,8 @@ export class Server {
    */
   async listen(): Promise<AddressInfo> {
     const { host, port } = parseAddress(this.addr);
+    // Fail before binding if the host keys are unusable.
+    this._ensureSSH();
     const listener = net.createServer();
     await new Promise<void>((resolve, reject) => {
       listener.once('error', reject);
@@ -226,6 +228,7 @@ export class Server {
    */
   async serve(listener: net.Server): Promise<never> {
     if (this._closed) throw ErrServerClosed;
+    this._ensureSSH();
     if (!listener.listening) {
       await new Promise<void>((resolve, reject) => {
         listener.once('error', reject);

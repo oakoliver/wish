@@ -307,3 +307,9 @@ describe('lifecycle', () => {
     expect(() => NewServer(WithHostKeyPath(join(__dirname ?? '.', 'testdata', 'ca.pub')))).toThrow();
   });
 });
+
+test('testsession reports a server that cannot start', async () => {
+  const srv = new Server({ handler: () => {} });
+  srv.hostSigners.push('not a key');
+  await expect(testsession.Listen(srv)).rejects.toThrow('Cannot parse privateKey');
+});

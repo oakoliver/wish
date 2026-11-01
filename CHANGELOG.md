@@ -11,7 +11,7 @@ First release. Ports [wish v2.0.5](https://github.com/charmbracelet/wish/release
 - Middleware: `bubbletea` (with per-session colour profile and Lip Gloss downsampling), `logging`, `activeterm`, `accesscontrol`, `ratelimiter`, `recover`, `elapsed`, `comment`, `git`, `scp`, and the `testsession` helpers.
 - `Command` / `Cmd`, usable as a Bubble Tea `ExecCommand`.
 - TypeScript-only options: `WithHandshakeTimeout`, `WithMaxAuthTries`, `WithKeepAlive`.
-- Upstream's tests ported to `bun test`, plus new tests for limits, timeouts, authentication, isolation and the Bubble Tea middleware: 153 tests, passing on Bun and on Node.js.
+- Upstream's tests ported to `bun test`, plus new tests for limits, timeouts, authentication, isolation and the Bubble Tea middleware: 154 tests, passing on Bun and on Node.js.
 - Examples from upstream, and two larger ones: `lobby.ts` (a chat room) and `arena.ts` (a game with a shared leaderboard).
 
 ### Not ported

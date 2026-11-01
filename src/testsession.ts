@@ -12,7 +12,7 @@
 import net from 'node:net';
 import { Readable, Writable } from 'node:stream';
 import ssh2 from 'ssh2';
-import type { Server } from './server.js';
+import { ErrServerClosed, type Server } from './server.js';
 
 /** Client options; anything else is passed to ssh2's `Client.connect`. */
 export interface ClientConfig extends Partial<ssh2.ConnectConfig> {
@@ -183,7 +183,18 @@ async function listenLoopback(): Promise<net.Server> {
 /** Starts the server on a random loopback port; resolves with `host:port`, as testsession.Listen. */
 export async function Listen(srv: Server): Promise<string> {
   const listener = await listenLoopback();
-  srv.serve(listener).catch(() => {});
+  // serve() only settles when the server closes, or right away when it cannot
+  // start (an unusable host key, say): surface that instead of leaving a
+  // listener that accepts connections nobody handles.
+  let failure: unknown = null;
+  srv.serve(listener).catch((err) => {
+    if (err !== ErrServerClosed) failure = err;
+  });
+  await new Promise((resolve) => setImmediate(resolve));
+  if (failure) {
+    listener.close();
+    throw failure;
+  }
   open.add({ close: () => srv.close() });
   const { address, port } = listener.address() as net.AddressInfo;
   return `${address}:${port}`;
